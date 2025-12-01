@@ -1,0 +1,118 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+site_url: "https://your-domain.com"
+
+publish_mode: editorial_workflow
+
+slug:
+  encoding: "unicode"
+  clean_accents: true
+  sanitize_replacement: "-"
+
+collections:
+  # ---------------------------------------------------------
+  # PROPERTIES (Your Existing Collection, Kept As-Is)
+  # ---------------------------------------------------------
+  - name: "properties"
+    label: "Properties"
+    folder: "content/properties"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string", hint: "Property name or location" }
+      - { label: "Slug", name: "slug", widget: "string", hint: "URL-friendly version of title (e.g., bronx-property-1)" }
+      - { label: "Location", name: "location", widget: "string", hint: "e.g., Bronx, Brooklyn, Queens" }
+      - { label: "Featured Image", name: "featuredImage", widget: "image", required: false }
+      - { label: "Gallery", name: "gallery", widget: "list", field: { label: "Image", name: "image", widget: "image" }, required: false }
+      - { label: "Description", name: "description", widget: "markdown", required: false }
+      - { label: "Address", name: "address", widget: "string", required: false }
+      - { label: "Property Type", name: "propertyType", widget: "select", options: ["residential", "commercial", "mixed-use"], required: false }
+      - { label: "Status", name: "status", widget: "select", options: ["owned", "under-management", "sold"], default: "owned", required: false }
+      - { label: "Year Acquired", name: "yearAcquired", widget: "string", required: false }
+      - { label: "Units", name: "units", widget: "number", required: false }
+      - { label: "Square Footage", name: "squareFootage", widget: "number", required: false }
+      - { label: "Publish Date", name: "date", widget: "datetime", default: "" }
+
+  # ---------------------------------------------------------
+  # STATIC PAGES
+  # ---------------------------------------------------------
+  - name: "pages"
+    label: "Pages"
+    files:
+      - label: "Home Page"
+        name: "home"
+        file: "content/pages/home.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Hero Heading", name: "hero_heading", widget: "string" }
+          - { label: "Hero Subheading", name: "hero_subheading", widget: "text" }
+          - { label: "Hero Image", name: "hero_image", widget: "image", required: false }
+          - { label: "Content Blocks", name: "blocks", widget: "list", types:
+              [
+                { label: "Text Section", name: "text", widget: "object", fields: [
+                    { label: "Heading", name: "heading", widget: "string" },
+                    { label: "Body", name: "body", widget: "markdown" }
+                ]},
+                { label: "Image + Text", name: "image_text", widget: "object", fields: [
+                    { label: "Image", name: "image", widget: "image" },
+                    { label: "Heading", name: "heading", widget: "string" },
+                    { label: "Body", name: "body", widget: "markdown" },
+                    { label: "Image Position", name: "position", widget: "select", options: ["left", "right"], default: "left" }
+                ]}
+              ]
+            }
+
+  # ---------------------------------------------------------
+  # TEAM MEMBERS
+  # ---------------------------------------------------------
+  - name: "team"
+    label: "Team"
+    folder: "content/team"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Role", name: "role", widget: "string" }
+      - { label: "Photo", name: "photo", widget: "image" }
+      - { label: "Bio", name: "bio", widget: "markdown" }
+      - { label: "Email", name: "email", widget: "string", required: false }
+      - { label: "Phone", name: "phone", widget: "string", required: false }
+
+  # ---------------------------------------------------------
+  # GLOBAL SETTINGS
+  # ---------------------------------------------------------
+  - name: "settings"
+    label: "Site Settings"
+    files:
+      - label: "General"
+        name: "general"
+        file: "content/settings/general.json"
+        fields:
+          - { label: "Site Name", name: "siteName", widget: "string" }
+          - { label: "Tagline", name: "tagline", widget: "string", required: false }
+          - { label: "Logo", name: "logo", widget: "image", required: false }
+          - { label: "Footer Text", name: "footerText", widget: "text" }
+
+      - label: "Navigation"
+        name: "navigation"
+        file: "content/settings/navigation.json"
+        fields:
+          - label: "Menu"
+            name: "menu"
+            widget: "list"
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "URL", name: "url", widget: "string" }
+
+      - label: "SEO"
+        name: "seo"
+        file: "content/settings/seo.json"
+        fields:
+          - { label: "Meta Title", name: "metaTitle", widget: "string" }
+          - { label: "Meta Description", name: "metaDescription", widget: "text" }
+          - { label: "Default Social Image", name: "socialImage", widget: "image", required: false }
