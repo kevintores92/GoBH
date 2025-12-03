@@ -1,0 +1,33 @@
+#
+on:
+  schedule:
+  - cron: '0 */4 * * *'
+  push:
+    branches:
+    - master
+  pull_request:
+    paths:
+    - .github/actions/prepare/action.yml
+    - .github/workflows/e2e-storybook-workflow.yml
+    - scripts/e2e-setup-ci.sh
+
+name: 'E2E Storybook'
+env:
+  STORYBOOK_DISABLE_TELEMETRY: 1
+jobs:
+  chore:
+    name: 'Validating Storybook (React with Vite app)'
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: ./.github/actions/prepare
+
+    - name: 'Running the integration test'
+      run: |
+        source scripts/e2e-setup-ci.sh
+        yarn create vite react --template react && cd react
+
+        yarn dlx storybook@latest init --yes --no-dev
+        yarn build-storybook

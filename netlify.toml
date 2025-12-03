@@ -1,0 +1,7 @@
+[build]
+  command = "corepack enable && yarn install --check-files && yarn build"
+  publish = "build"
+
+[build.environment]
+  YARN_ENABLE_IMMUTABLE_INSTALLS = "false"
+  NODE_VERSION = "22.21.1"
