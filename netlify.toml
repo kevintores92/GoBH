@@ -1,6 +1,10 @@
 [build]
   command = "corepack enable && yarn install && yarn build"
-  publish = "build"
+
+# No publish directory specified — the plugin will handle it automatically
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
 
 [build.environment]
   YARN_ENABLE_IMMUTABLE_INSTALLS = "false"
